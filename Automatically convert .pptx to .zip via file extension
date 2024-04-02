@@ -1,0 +1,15 @@
+import os
+
+folder = "C:\\" #Enter location of folder that contain .pptx files here
+
+def rename_pptx_to_zip(pptx_filepath): 
+    base_filename = os.path.splitext(os.path.basename(pptx_filepath))[0]
+    new_filename = base_filename + ".zip"
+    new_filepath = os.path.join(folder, new_filename)
+    os.rename(pptx_filepath, new_filepath)
+    print(f"{pptx_filepath} renamed to {new_filepath}")
+#Optional: ensure you have file extension set to visible in Windows Explorer to confirm
+for filename in os.listdir(folder):
+    if filename.endswith(".pptx"):
+        pptx_filepath = os.path.join(folder, filename)
+        rename_pptx_to_zip(pptx_filepath)
