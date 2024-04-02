@@ -1,0 +1,33 @@
+import os
+import shutil
+
+base_folder = "C:\\"
+
+def process_activex_folder(activex_folder_path):
+"""Copies .BIN files from an activeX folder to its parent folder"""
+parent_folder = os.path.dirname(activex_folder_path)
+folder_name = os.path.basename(parent_folder) # Get the parent folder's name
+
+dest_folder = os.path.join(parent_folder, folder_name + " - bin files")
+os.makedirs(dest_folder, exist_ok=True)
+
+for filename in os.listdir(activex_folder_path):
+if filename.endswith(".bin"):
+src_file = os.path.join(activex_folder_path, filename)
+dest_file = os.path.join(dest_folder, filename)
+
+shutil.copy2(src_file, dest_file)
+print(f"{filename} copied to {dest_file}")
+
+# Main loop
+for folder_1 in os.listdir(base_folder):
+folder_1_path = os.path.join(base_folder, folder_1)
+
+ppt_folder_path = os.path.join(folder_1_path, "ppt")
+if os.path.isdir(ppt_folder_path): # Check if "ppt" folder exists
+
+activex_folder_path = os.path.join(ppt_folder_path, "activeX") #This code will not work unless you have extracted the .zip file originally saved as .pptx - it should be in the the following path ppt,activex,
+if os.path.isdir(activex_folder_path):
+process_activex_folder(activex_folder_path)
+
+print("All BIN files processed!")
