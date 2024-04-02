@@ -1,0 +1,28 @@
+import os
+import win32com.client
+
+folder = "C:\\" #Put the location of your folder here containing the PowerPoints in the 2003-2009 version 
+
+def convert_ppt_to_pptx(ppt_filepath):
+    powerpoint = win32com.client.Dispatch("PowerPoint.Application")
+    powerpoint.Visible = True  
+
+    try:
+        presentation = powerpoint.Presentations.Open(ppt_filepath)
+        base_filename = os.path.splitext(os.path.basename(ppt_filepath))[0]
+        output_filename = base_filename + ".pptx"
+        output_filepath = os.path.join(boardworks_folder, output_filename)
+
+        # Find the correct FileFormat constant (Double-Check in PowerPoint!)
+        presentation.SaveAs(output_filepath, FileFormat=11)   
+        print(f"{ppt_filepath} saved as {output_filepath}")
+    except Exception as e:
+        print(f"Error converting {ppt_filepath}: {e}")
+    finally:
+        presentation.Close()
+        powerpoint.Quit()
+
+for filename in os.listdir(folder):
+    if filename.endswith(".ppt"):
+        ppt_filepath = os.path.join(folder, filename)
+        convert_ppt_to_pptx(ppt_filepath)
