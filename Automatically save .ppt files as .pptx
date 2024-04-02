@@ -11,10 +11,10 @@ def convert_ppt_to_pptx(ppt_filepath):
         presentation = powerpoint.Presentations.Open(ppt_filepath)
         base_filename = os.path.splitext(os.path.basename(ppt_filepath))[0]
         output_filename = base_filename + ".pptx"
-        output_filepath = os.path.join(boardworks_folder, output_filename)
+        output_filepath = os.path.join(folder, output_filename)
 
         # Find the correct FileFormat constant (Double-Check in PowerPoint!)
-        presentation.SaveAs(output_filepath, FileFormat=11)   
+        presentation.SaveAs(output_filepath, FileFormat=11)   #Ensure your default file is .pptx - Microsoft publishes the file format here: https://learn.microsoft.com/en-us/office/vba/api/powerpoint.ppsaveasfiletype
         print(f"{ppt_filepath} saved as {output_filepath}")
     except Exception as e:
         print(f"Error converting {ppt_filepath}: {e}")
